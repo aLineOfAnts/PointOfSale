@@ -69,14 +69,18 @@ class POS {
                    cout << endl;
                    Shop(menuN, menuP, names, price, quantities);
                } else {
-                   Cashier(menuN, menuP, names, price, quantities); // Add this
+                   ProcessPayment(menuN, menuP, names, price, quantities); // Add this
                }
            } else {
                Options(menuN, menuP, names, price, quantities);
            }
        }
 
-void Cart() { //GO HERE HERE
+void PrintReceipt() {
+    
+}
+
+void Cart() { 
     cout << string(20, '=') << " CART " << string(24, '=') << endl;
     cout << "ITEM" << setw(20) << "QTY" << right << setw(23) << "COST" << endl;
     cout << string(50, '=') << endl;
@@ -115,13 +119,10 @@ int CalculateTotal(double price[15]) {
 }
 
 void DisplayHeader(){
-    cout << string (50, '=') << endl;
-    cout << "\tWELCOME TO REGIE'S SUPERMARKET" << endl;
-    cout << string (50, '=') << endl;
-
+    cout << string (50, '=') << endl << "\tWELCOME TO REGIE'S SUPERMARKET" << endl << string (50, '=') << endl;
 };
 
-void ProcessPayment(double tax, double total, double change) {
+void PrintReceipt(double tax, double total, double change) {
         system("cls");
       cout << "\nTRANSACTION COMPLETE \n";
       cout << "NAME" << setw(10) << "QTY" << setw(10) <<  "PRICE\n";
@@ -139,8 +140,8 @@ void ProcessPayment(double tax, double total, double change) {
 
 
 
- void Cashier(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
-           Cart();
+ void ProcessPayment(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
+           
            double subtotal = CalculateTotal(price);
            double tax = applyTax(subtotal);
            double total = subtotal + tax;
@@ -176,7 +177,8 @@ void ProcessPayment(double tax, double total, double change) {
            }
            
             cout << string(50, '=') << endl;
-           cout << "Total: " << total << "$\n" << "Insert cash \nAmount: ";
+            Cart();
+           cout << "Total: " << total << endl << "Insert cash \nAmount: ";
            double input;
 
 
@@ -184,7 +186,7 @@ void ProcessPayment(double tax, double total, double change) {
 
           
            if (input >= total) {
-               ProcessPayment(tax, total, input - total);
+               PrintReceipt(tax, total, input - total);
            } else {
                cout << "Insufficent amount. ";
                cout << endl;
@@ -303,31 +305,6 @@ cout << string (50, '=') << endl;
 }
 
 
-/*void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
-    cout << "POS SYSTEM \n";
-    
-    for (int i = 0; i < 7; i++) {
-    	
-        cout << i + 1 << ".) " << menuN[i] << " " << menuP[i] << "$" << endl;
-    }
-        cout << endl;
-        Cart();
-         
-   int size = 0;
-
-   for (int i = 0; i < 15; i++) {
-      if (names[i] == "") {
-         break;
-      }
-      size++;
-   }
-      
-    if (size > 0) {
-        Options(menuN, menuP, names, price, quantities);
-    } else {
-        Shop(menuN, menuP, names, price, quantities);
-    }
-}*/
 
 
 
