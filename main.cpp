@@ -40,11 +40,6 @@ int main() {
 
   Item menu[7];
 
-
-  enum status {CART, SHOP, COMPLETE};
-  bool running = true;
-
-
   POS::LoadItems(menuNames, menuPrice, menu);
 
   POS::SetRunning();
