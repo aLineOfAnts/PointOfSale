@@ -4,15 +4,7 @@
 #include "pos.hpp"
 using namespace std;
 
-
-/*
-Inventory Capacity: Your system must contain exactly 15 unique items in your arrays.​
-Parallel Arrays: Use at least three arrays (Item Names, Item Prices, and Quantities Purchased).
-​Input Loop: Use a while or do-while loop to allow the user to add multiple items to a "cart."
-​Decision Logic: Use if/else or switch statements to handle menu selections and payment validation.
-​Formatting: Use #include <iomanip> to ensure all currency values display with exactly two decimal places (e.g., $5.00).
-//clang++ -std=c++17 main.cpp -o main && ./main
-*/
+//type clang++ -std=c++17 main.cpp -o main && ./main to run program
 
 
 int main() {
