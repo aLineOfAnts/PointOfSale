@@ -44,7 +44,7 @@ class POS {
            int input;
            cin >> input;
            if (getSelection(1, input)) {
-               if (input == 1) { 
+               if (input == 0) { 
                    cout << endl;
                    Shop(menuN, menuP, names, price, quantities);
                } else {
@@ -55,16 +55,6 @@ class POS {
            }
        }
 
-
-void Cart(string names[15], double price[15], int quantities[15]) {
-   cout << "== Cart ==\n";
-
-   for (int i = 0; i < 15; i++) {
-      
-      cout << names[i] << " " << price[i] << "$ " << quantities[i] << endl;
-   }
-   cout << endl;
-}
 void Cart() {
    cout << "== Cart ==\n";
 
@@ -87,21 +77,22 @@ int CalculateTotal(double price[15]) {
 
 void Transaction(string names[15], double price[15], int quantities[15], double total, double change) {
       cout << "\nTRANSACTION COMPLETE \n";
-      cout << "NAME" << setw(10) << "QTY" << setw(10) <<  "PRICE";
+      cout << "NAME" << setw(10) << "QTY" << setw(10) <<  "PRICE\n";
       for (int i = 0; i < 15; i++) {    
-         cout << names[i] << setw(10) << quantities[i] << setw(10) << price[i] << setw(10) << endl;
+        if (names[i] == "") {break;}
+         cout << names[i] << setw(10) << quantities[i] << setw(10) << price[i] << endl;
       }
          cout << "Total: " << total << endl;
          cout << "Change: " << change << endl;
 
 
-         //running = false;
+        running = false;
 }
 
 
 
  void Cashier(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
-           Cart(names, price, quantities);
+           Cart();
            double amount = CalculateTotal(price);
            cout << "Total: " << amount << "$\n" << "Insert cash \nAmount: ";
            double input;
@@ -123,14 +114,14 @@ void Transaction(string names[15], double price[15], int quantities[15], double 
 
 void Shop(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
            int input;
-           cout << "Select (1-7): ";
+           cout << "Select (0-6): ";
            cin >> input;
 
 
-           if (getSelection(7, input)) {
+           if (getSelection(6, input)) {
              
                for (int i = 0; i < 15; i++) {
-                   if (input - 1 == i) {
+                   if (input == i) {
 
 
                        AddItem(menuN[i], menuP[i], names, price, quantities);
@@ -144,12 +135,12 @@ void Shop(string menuN[7], double menuP[7], string names[15], double price[15], 
 
 
 void AddItem(string menuN, double menuP, string names[15], double price[15], int quantities[15]) {
-       cout << "\nAdd " << menuN << "?" << endl << "1. ) Yes \n" << "2. ) No \n";
+       cout << "\nAdd " << menuN << "?" << endl << "0. ) Yes \n" << "1. ) No \n";
        int input;
        cin >> input;
        
        if (getSelection(1, input)) {
-           if (input == 1) {
+           if (input == 0) {
                cout << "\nInsert a quantity: ";
                
                cin >> input;
@@ -169,7 +160,7 @@ void AddItem(string menuN, double menuP, string names[15], double price[15], int
             	for (int c = 0; c < 15; c++) {
                    if (names[c] == "") {
                      names[c] = menuN;
-                     price[c] = menuP;
+                     price[c] = menuP * input;
                      quantities[c] = input;
                      return;
                    }
