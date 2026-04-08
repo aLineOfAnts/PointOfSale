@@ -12,23 +12,40 @@ using namespace std;
 class POS {
    public:
       string menuNames[15] = {
-         "Banana",
-         "Orange",
-         "Mango",
-         "Watermelon",
-         "Fresh Bread",
-         "Apple",
-         "Pear"
-      };
+    "Banana",
+    "Orange",
+    "Mango",
+    "Watermelon",
+    "Fresh Bread",
+    "Apple",
+    "Pear",
+    "Tuna",
+    "Chicken",
+    "Beef",
+    "Tofu",
+    "Pork",
+    "Potato",
+    "Strawberry",
+    "Whey Protein",
+    
+ };
 
-   double menuPrice[7] = {
-      5,
+   double menuPrice[15] = {
       5,
       6,
       5,
       4,
       5,
-      3
+      3,
+      5,
+      5,
+      6,
+      5,
+      5,
+      4,
+      5,
+      3,
+      30
    };
  
       //Cart Arrays
@@ -39,6 +56,10 @@ class POS {
       bool running = true;
             
    
+    float applyTax(float menuPrice) {
+	    return menuPrice * 0.12;
+    };
+
    void Options(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
            cout << "Resume? \n0. ) Yes \n1.) No \n";
            int input;
@@ -55,9 +76,10 @@ class POS {
            }
        }
 
-void Cart() {
-   cout << "== Cart ==\n";
-
+void Cart() { //GO HERE HERE
+    cout << string(20, '=') << " CART " << string(24, '=') << endl;
+    cout << "ITEM" << setw(21) << "COST" << right << setw(21) << "QTY" << endl;
+    cout << string(50, '=') << endl;
    for (int i = 0; i < 15; i++) {
       if (names[i] == "") { break; }
       cout << names[i] << " " << price[i] << "$ " << quantities[i] << endl;
@@ -75,15 +97,16 @@ int CalculateTotal(double price[15]) {
 }
 
 
-void Transaction(string names[15], double price[15], int quantities[15], double total, double change) {
+void ProcessPayment(double tax, double total, double change) {
       cout << "\nTRANSACTION COMPLETE \n";
       cout << "NAME" << setw(10) << "QTY" << setw(10) <<  "PRICE\n";
       for (int i = 0; i < 15; i++) {    
         if (names[i] == "") {break;}
          cout << names[i] << setw(10) << quantities[i] << setw(10) << price[i] << endl;
       }
-         cout << "Total: " << total << endl;
-         cout << "Change: " << change << endl;
+        cout << "Total: " << total << endl;
+        cout << "Change: " << change << endl;
+        cout << "Tax: " << tax << endl;
 
 
         running = false;
@@ -93,16 +116,19 @@ void Transaction(string names[15], double price[15], int quantities[15], double 
 
  void Cashier(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
            Cart();
-           double amount = CalculateTotal(price);
-           cout << "Total: " << amount << "$\n" << "Insert cash \nAmount: ";
+           double subtotal = CalculateTotal(price);
+           double tax = applyTax(subtotal);
+           double total = subtotal + tax;
+
+           cout << "Total: " << total << "$\n" << "Insert cash \nAmount: ";
            double input;
 
 
            cin >> input;
 
 
-           if (input >= amount) {
-               Transaction(names, price, quantities, amount, input - amount);
+           if (input >= total) {
+               ProcessPayment(tax, total, input - total);
            } else {
                cout << "Insufficent amount. ";
                cout << endl;
@@ -114,7 +140,7 @@ void Transaction(string names[15], double price[15], int quantities[15], double 
 
 void Shop(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
            int input;
-           cout << "Select (0-6): ";
+           cout << "Select (0-14): ";
            cin >> input;
 
 
@@ -145,13 +171,14 @@ void AddItem(string menuN, double menuP, string names[15], double price[15], int
                
                cin >> input;
 
-               cout << "ADDING ITEM!";
+               
 
 				//Check if item exists in inventory
                for (int c = 0; c < 15; c++) {
                    if (names[c] == menuN) { //if the same item is already in the cart
                    		quantities[c] += input;
                    		price[c] = menuP * quantities[c];
+                        cout << "ADDING ITEM!\n";
                    		break;
 				   }
                   
@@ -162,6 +189,7 @@ void AddItem(string menuN, double menuP, string names[15], double price[15], int
                      names[c] = menuN;
                      price[c] = menuP * input;
                      quantities[c] = input;
+                     cout << "ADDING ITEM!\n";
                      return;
                    }
                }
@@ -182,8 +210,43 @@ bool getSelection(int max, int input)  {
 }
 
 
+void displayHeader(){
+cout << string (50, '=') << endl;
+cout << "\tWELCOME TO REGIE'S SUPERMARKET" << endl;
+cout << string (50, '=') << endl;
 
-void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
+
+
+};
+
+void getMenu(){
+cout << left << setw(20) << "ITEM" << right << setw(27) << "PRICE" << endl;
+
+
+cout << string (50, '=') << endl;
+    for (int i = 0; i < 15; i++) {
+	    cout << left << setw(20) << menuNames[i] << " " << right << setw(25) << fixed << setprecision(2) << menuPrice[i] << endl;
+    }
+    cout << endl;
+    Cart();
+
+    int size = 0;
+    for (int i = 0; i < 15; i++) {
+        if (names[i] == "") {
+            break;
+        }
+        size++;
+    }
+        
+        if (size > 0) {
+            Options(menuNames, menuPrice, names, price, quantities);
+        } else {
+            Shop(menuNames, menuPrice, names, price, quantities);
+        }
+}
+
+
+/*void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
     cout << "POS SYSTEM \n";
     
     for (int i = 0; i < 7; i++) {
@@ -207,13 +270,13 @@ void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[1
     } else {
         Shop(menuN, menuP, names, price, quantities);
     }
-}
+}*/
 
 
 
 void Run() {
    while (running) {
-      ShowMenu(menuNames, menuPrice, names, price, quantities);
+      getMenu();
       cout << "\n";
  }
 }
