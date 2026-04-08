@@ -78,15 +78,33 @@ class POS {
 
 void Cart() { //GO HERE HERE
     cout << string(20, '=') << " CART " << string(24, '=') << endl;
-    cout << "ITEM" << setw(21) << "COST" << right << setw(21) << "QTY" << endl;
+    cout << "ITEM" << setw(20) << "QTY" << right << setw(23) << "COST" << endl;
     cout << string(50, '=') << endl;
+
    for (int i = 0; i < 15; i++) {
       if (names[i] == "") { break; }
-      cout << names[i] << " " << price[i] << "$ " << quantities[i] << endl;
+      //characters before price need to be 26
+      //formatting 
+      int l1 = CalculateGap(names[i], 23);
+      
+      
+      cout << names[i] << setw(l1) << right << quantities[i] << right << setw(23) << price[i] << endl;
    }
+
    cout << endl;
 }
 
+int CalculateGap(string str, int max) {
+    int gap = 0;
+    int num = str.size();
+
+    while (num < max) {
+        num++;
+        gap++;
+    }
+
+    return gap;
+}
 
 int CalculateTotal(double price[15]) {
    double total;
@@ -159,6 +177,7 @@ void Shop(string menuN[7], double menuP[7], string names[15], double price[15], 
            }
     }
 
+    
 
 void AddItem(string menuN, double menuP, string names[15], double price[15], int quantities[15]) {
        cout << "\nAdd " << menuN << "?" << endl << "0. ) Yes \n" << "1. ) No \n";
@@ -179,7 +198,7 @@ void AddItem(string menuN, double menuP, string names[15], double price[15], int
                    		quantities[c] += input;
                    		price[c] = menuP * quantities[c];
                         cout << "ADDING ITEM!\n";
-                   		break;
+                   		return;
 				   }
                   
                }
