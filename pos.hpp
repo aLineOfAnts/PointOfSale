@@ -13,7 +13,6 @@ namespace POS {
             return true;
         }
         
-        
         cout << "Invalid Input \n";
         return false;
         }

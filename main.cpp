@@ -1,7 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include "pos.hpp"
 using namespace std;
 
 
@@ -10,7 +9,37 @@ using namespace std;
 
 // NOTE TO SELF CHANGE 1-7 TO 0-7
 
-void Options(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
+class POS {
+   public:
+      string menuNames[15] = {
+         "Banana",
+         "Orange",
+         "Mango",
+         "Watermelon",
+         "Fresh Bread",
+         "Apple",
+         "Pear"
+      };
+
+   double menuPrice[7] = {
+      5,
+      5,
+      6,
+      5,
+      4,
+      5,
+      3
+   };
+ 
+      //Cart Arrays
+      string names[15] = {""};
+      double price[15] = {0};
+      int quantities[15] = {0};
+
+      bool running = true;
+            
+   
+   void Options(string menuN[7], double menuP[7], string names[15], double price[15], int quantities[15]) {
            cout << "Resume? \n0. ) Yes \n1.) No \n";
            int input;
            cin >> input;
@@ -32,6 +61,15 @@ void Cart(string names[15], double price[15], int quantities[15]) {
 
    for (int i = 0; i < 15; i++) {
       
+      cout << names[i] << " " << price[i] << "$ " << quantities[i] << endl;
+   }
+   cout << endl;
+}
+void Cart() {
+   cout << "== Cart ==\n";
+
+   for (int i = 0; i < 15; i++) {
+      if (names[i] == "") { break; }
       cout << names[i] << " " << price[i] << "$ " << quantities[i] << endl;
    }
    cout << endl;
@@ -89,7 +127,7 @@ void Shop(string menuN[7], double menuP[7], string names[15], double price[15], 
            cin >> input;
 
 
-           if (getSelection(7)) {
+           if (getSelection(7, input)) {
              
                for (int i = 0; i < 15; i++) {
                    if (input - 1 == i) {
@@ -110,7 +148,7 @@ void AddItem(string menuN, double menuP, string names[15], double price[15], int
        int input;
        cin >> input;
        
-       if (getSelection(1)) {
+       if (getSelection(1, input)) {
            if (input == 1) {
                cout << "\nInsert a quantity: ";
                
@@ -149,6 +187,7 @@ bool getSelection(int max, int input)  {
     if (input >= 0 && input <= max) {
         return true;
     }
+    return false;
 }
 
 
@@ -161,15 +200,15 @@ void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[1
         cout << i + 1 << ".) " << menuN[i] << " " << menuP[i] << "$" << endl;
     }
         cout << endl;
-        //Cart(cart);
+        Cart();
          
    int size = 0;
 
    for (int i = 0; i < 15; i++) {
-      size++;
       if (names[i] == "") {
          break;
       }
+      size++;
    }
       
     if (size > 0) {
@@ -179,56 +218,23 @@ void ShowMenu(string menuN[7], double menuP[7], string names[15], double price[1
     }
 }
 
-void pos() {
-
-}
-
-class User {
-	static string names[15];
-	static float price[15];
-	static int quantities[15];
-};
-
-int main() {
- 
 
 
-
- 
-
-
-//Menu Arrays
- string menuNames[15] = {
-    "Banana",
-    "Orange",
-    "Mango",
-    "Watermelon",
-    "Fresh Bread",
-    "Apple",
-    "Pear"
- };
-
-
- double menuPrice[7] = {
-    5,
-    5,
-    6,
-    5,
-    4,
-    5,
-    3
- };
- 
- //Cart Arrays
- string names[15] = {""};
- double price[15] = {0};
- int quantities[15] = {0};
-
-bool running = true;
-
- while (running) {
+void Run() {
+   while (running) {
       ShowMenu(menuNames, menuPrice, names, price, quantities);
       cout << "\n";
  }
+}
+      
+};
+
+
+
+int main() {
+   POS pos = POS();
+   pos.Run();
+   
+
 }
 
