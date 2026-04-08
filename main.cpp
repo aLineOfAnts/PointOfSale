@@ -55,9 +55,9 @@ int main() {
 
   POS::LoadItems(menuNames, menuPrice, menu);
 
+  POS::SetRunning();
 
-
-  while (running) {
+  while (POS::IsRunning()) {
        POS::ShowMenu(menu, cart);
        cout << "\n";
   }
