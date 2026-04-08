@@ -114,8 +114,15 @@ int CalculateTotal(double price[15]) {
    return total;
 }
 
+void DisplayHeader(){
+    cout << string (50, '=') << endl;
+    cout << "\tWELCOME TO REGIE'S SUPERMARKET" << endl;
+    cout << string (50, '=') << endl;
+
+};
 
 void ProcessPayment(double tax, double total, double change) {
+        system("cls");
       cout << "\nTRANSACTION COMPLETE \n";
       cout << "NAME" << setw(10) << "QTY" << setw(10) <<  "PRICE\n";
       for (int i = 0; i < 15; i++) {    
@@ -138,13 +145,44 @@ void ProcessPayment(double tax, double total, double change) {
            double tax = applyTax(subtotal);
            double total = subtotal + tax;
 
+           //Cashier Sprite
+
+          
+            
+           cout << string(16, '=') << " [ CASHIER ] " << string(21, '=') << endl;
+
+           string cashier[16] = {
+            "        .--'''''''''--.\n",
+            "     .'      .---.      '.\n",
+            "    /    .-----------.    \\\n",
+            "   /        .-----.        \\\n",
+            "   |       .-.   .-.       |\n",
+            "   |      /   \\ /   \\      |\n",
+            "    \\    | .-. | .-. |    /\n",
+            "     '-._| | | | | | |_.-'\n",
+            "         | '-' | '-' |\n",
+            "          \\___/ \\___/\n",
+            "       _.-'  /   \\  `-._\n",
+            "     .' _.--|     |--._ '.\n",
+            "     ' _...-|     |-..._ '\n",
+            "            |     |\n",
+            "            '.___.'\n",
+            "              | |\n\n"
+           };
+
+           cout << endl;
+           for (int i = 0; i < 16; i++) {
+                cout << string(8, ' ') << cashier[i];
+           }
+           
+            cout << string(50, '=') << endl;
            cout << "Total: " << total << "$\n" << "Insert cash \nAmount: ";
            double input;
 
 
            cin >> input;
 
-
+          
            if (input >= total) {
                ProcessPayment(tax, total, input - total);
            } else {
@@ -162,7 +200,7 @@ void Shop(string menuN[7], double menuP[7], string names[15], double price[15], 
            cin >> input;
 
 
-           if (getSelection(6, input)) {
+           if (getSelection(14, input)) {
              
                for (int i = 0; i < 15; i++) {
                    if (input == i) {
@@ -294,6 +332,7 @@ cout << string (50, '=') << endl;
 
 
 void Run() {
+    DisplayHeader();
    while (running) {
       getMenu();
       cout << "\n";
